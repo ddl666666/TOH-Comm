@@ -2,6 +2,7 @@ import { HeroService } from './../hero.service';
 import { HEROES } from './../mock-heroes';
 import { Hero } from './../hero';
 import { Component, OnInit } from '@angular/core';
+import { MassageService } from '../massage.service';
 
 @Component({
   selector: 'app-hero-list',
@@ -11,17 +12,22 @@ import { Component, OnInit } from '@angular/core';
 export class HeroListComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService, private ms: MassageService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
   onSelect(hero: Hero) {
+    this.ms.add(`HeroList: ${hero.name} is clicked!` );
     this.selectedHero = hero;
   }
 
   getHeroes() {
-    this.heroes = this.heroService.getHeroes();
+    this.heroService.getHeroes()
+      .subscribe(xxx => {
+        this.ms.add('HeroList: Heroes is fetched!');
+        this.heroes = xxx;
+      });
   }
 }
