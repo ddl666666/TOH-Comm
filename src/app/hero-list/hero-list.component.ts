@@ -1,5 +1,5 @@
 import { HeroService } from './../hero.service';
-import { HEROES } from './../mock-heroes';
+// import { HEROES } from './../mock-heroes';
 import { Hero } from './../hero';
 import { Component, OnInit } from '@angular/core';
 import { MassageService } from '../massage.service';
@@ -29,5 +29,18 @@ export class HeroListComponent implements OnInit {
         this.ms.add('HeroList: Heroes is fetched!');
         this.heroes = xxx;
       });
+  }
+
+  newHero(no: string, name: string) {
+    no = no.trim();
+    name = name.trim();
+    if (!no || !name) { return; }
+    this.heroService.createHero({ no, name } as Hero)
+    .subscribe(hero => this.heroes.push(hero));
+  }
+
+  delete(id: string) {
+    this.heroService.deleteHero(id)
+      .subscribe(_ => this.heroes = this.heroes.filter(h => h.id !== id));
   }
 }

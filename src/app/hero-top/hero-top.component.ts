@@ -16,8 +16,8 @@ export class HeroTopComponent implements OnInit {
   }
 
   getTopHeroes() {
-    this.hs.getHeroes()
-      .subscribe(heroes => this.topHeroes = heroes.slice(1, 5));
+    this.hs.getTopHeroes()
+      .subscribe(heroes => this.topHeroes = heroes);
   }
 
 }
